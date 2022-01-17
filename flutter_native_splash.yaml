@@ -1,6 +1,6 @@
 # flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml
 flutter_native_splash:
-  color: '#ffffff'
+  color: '#000000'
   #background_image: "assets/background.png"
   image: assets/logo_transparent.png
   #color_dark: "#042a49"

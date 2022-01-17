@@ -1,1 +1,7 @@
-class UserService {}
+class UserService {
+  create() {}
+  find() {}
+  findOne() {}
+  update() {}
+  destroy() {}
+}
