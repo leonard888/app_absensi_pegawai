@@ -1,4 +1,8 @@
+import 'package:app_presensi_pegawai/pages/attendance_detail_page.dart';
+import 'package:app_presensi_pegawai/pages/office_detail_page.dart';
+import 'package:app_presensi_pegawai/theme.dart';
 import 'package:flutter/material.dart';
+
 import 'package:app_presensi_pegawai/pages/home_page.dart';
 import 'package:app_presensi_pegawai/pages/login_page.dart';
 import 'package:app_presensi_pegawai/pages/register_page.dart';
@@ -11,7 +15,7 @@ import 'package:app_presensi_pegawai/pages/manager/employee/employee_input_page.
 import 'package:app_presensi_pegawai/pages/manager/employee/employee_list_page.dart';
 
 import 'package:app_presensi_pegawai/pages/manager/office/office_input_page.dart';
-import 'package:app_presensi_pegawai/pages/manager/office/office_list_page.dart';
+import 'package:app_presensi_pegawai/pages/office_list_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,21 +27,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          elevation: 2,
-          centerTitle: true,
-          foregroundColor: Colors.black, //here you can give the text color
-        ),
-      ),
+      themeMode: ThemeMode.dark,
+      darkTheme: ThemeClass.darkTheme,
+      theme: ThemeClass.lightTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/login',
       routes: {
         '/': (context) => const HomePage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
-        '/scan': (context) => const ScanPage(),
+        '/scan': (context) => ScanPage(),
+        '/office/detail': (context) => const OfficeDetailPage(),
+        '/attendance/detail': (context) => const AttendanceDetailPage(),
         '/manager/attendance/input': (context) => const AttendanceInputPage(),
         '/manager/attendance/list': (context) => const AttendanceListPage(),
         '/manager/employee/input': (context) => const EmployeeInputPage(),

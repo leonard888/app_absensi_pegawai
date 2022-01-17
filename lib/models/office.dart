@@ -1,45 +1,20 @@
-class Location {
-  String province, city, district, street, postal;
+import 'package:app_presensi_pegawai/models/submodels/meta.dart';
+import 'package:app_presensi_pegawai/models/submodels/office.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-  Location({
-    required this.province,
-    required this.city,
-    required this.district,
-    required this.postal,
-    required this.street,
+part 'office.g.dart';
+
+@JsonSerializable(explicitToJson: true)
+class OfficeRequest {
+  OfficeRequest({
+    this.data,
+    required this.meta,
   });
 
-  factory Location.fromJson(Map<String, dynamic> json) {
-    return Location(
-        province: json["province"],
-        city: json["city"],
-        district: json["district"],
-        postal: json["postal"],
-        street: json["street"]);
-  }
-}
+  List<OfficeData>? data;
+  Meta meta;
 
-class Office {
-  String id, name;
-  Location location;
-
-  Office({
-    required this.id,
-    required this.name,
-    required this.location,
-  });
-
-  factory Office.fromJson(Map<String, dynamic> json) => Office(
-        id: json["id"].toString(),
-        name: json["name"].toString(),
-        location: Location.fromJson(json['location']),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'province': location.province,
-        'city': location.city,
-        'district': location.district,
-        'postal': location.postal,
-        'street': location.street
-      };
+  factory OfficeRequest.fromJson(Map<String, dynamic> data) =>
+      _$OfficeRequestFromJson(data);
+  Map<String, dynamic> toJson() => _$OfficeRequestToJson(this);
 }

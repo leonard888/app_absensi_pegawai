@@ -1,1 +1,7 @@
-class AttendanceService {}
+class AttendanceService {
+  create() {}
+  find() {}
+  findOne() {}
+  update() {}
+  destroy() {}
+}

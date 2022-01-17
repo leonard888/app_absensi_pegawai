@@ -1,40 +1,37 @@
-class Attributes {
-  String firstName, lastName, email, avatar;
+import 'package:json_annotation/json_annotation.dart';
 
-  Attributes({
-    this.firstName = '',
-    this.lastName = '',
-    this.email = '',
-    this.avatar = '',
-  });
+part 'user.g.dart';
 
-  factory Attributes.fromJson(Map<String, dynamic> json) {
-    return Attributes(
-      firstName: json['first_name'],
-      lastName: json['last_name'],
-      email: json['email'],
-      avatar: json['avatar'] ?? 'https://via.placeholder.com/128',
-    );
-  }
-}
-
+@JsonSerializable()
 class User {
-  String id;
-  Attributes attributes;
+  String username, email;
+  int? id;
+  String? createdAt, updatedAt, provider;
+  bool? confirmed, blocked;
 
   User({
-    required this.id,
-    required this.attributes,
+    required this.username,
+    required this.email,
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.provider,
+    this.confirmed,
+    this.blocked,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["id"].toString(),
-        attributes: Attributes.fromJson(json['attributes']),
-      );
+  factory User.fromJson(Map<String, dynamic> data) => _$UserFromJson(data);
+  Map<String, dynamic> toJson() => _$UserToJson(this);
+}
 
-  Map<String, dynamic> toJson() => {
-        'first_name': attributes.firstName,
-        'last_name': attributes.lastName,
-        'email': attributes.email,
-      };
+@JsonSerializable(explicitToJson: true)
+class UserAuth {
+  String jwt;
+  User user;
+
+  UserAuth({required this.jwt, required this.user});
+
+  factory UserAuth.fromJson(Map<String, dynamic> data) =>
+      _$UserAuthFromJson(data);
+  Map<String, dynamic> toJson() => _$UserAuthToJson(this);
 }
