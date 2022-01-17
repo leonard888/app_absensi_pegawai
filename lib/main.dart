@@ -3,7 +3,7 @@ import 'package:app_presensi_pegawai/pages/office_detail_page.dart';
 import 'package:app_presensi_pegawai/theme.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app_presensi_pegawai/pages/home_page.dart';
+import 'package:app_presensi_pegawai/pages/main_page.dart';
 import 'package:app_presensi_pegawai/pages/login_page.dart';
 import 'package:app_presensi_pegawai/pages/register_page.dart';
 import 'package:app_presensi_pegawai/pages/scan_page.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/login',
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => const MainPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/scan': (context) => ScanPage(),
