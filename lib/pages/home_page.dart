@@ -12,6 +12,66 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<void> _showAttendanceDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'SCBD Office',
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Check In',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                Text(
+                  '18 Januari 2022 @ 09.00',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'Check Out',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                Text(
+                  '18 Januari 2022 @ 15.00',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white70,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.red,
+              ),
+              child: const Text('Check Out'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -73,12 +133,12 @@ class _HomePageState extends State<HomePage> {
               right: 24,
               bottom: 16,
             ),
-            child: Text(
+            child: const Text(
               "HISTORY",
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.normal,
                 color: Colors.white70,
-                fontSize: 16,
+                fontSize: 14,
               ),
             ),
           ),
@@ -90,49 +150,44 @@ class _HomePageState extends State<HomePage> {
             itemBuilder: (BuildContext ctx, int index) {
               return InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, "/attendance/detail");
+                  _showAttendanceDialog();
                 },
                 borderRadius: BorderRadius.circular(8),
                 splashColor: Colors.deepPurple.withAlpha(40),
                 child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Hello world",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 24),
-                            Text(
-                              "23/11/2021 - 10:10 AM",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          "Check In",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.green,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "SCBD Office",
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
+                          const SizedBox(height: 24),
+                          Text(
+                            "23/11/2021 - 10:10 AM",
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        ],
+                      ),
+                      Text(
+                        "Check In",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           ),

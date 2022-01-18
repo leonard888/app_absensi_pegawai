@@ -28,22 +28,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 width: 64,
               ),
             ),
-            SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             Text(
               'John Doe',
-              style: TextStyle(
-                fontSize: 24,
-              ),
+              style: Theme.of(context).textTheme.headline5,
             ),
             Text(
               'johndoe@gmail.com',
-              style: TextStyle(
-                fontSize: 14,
-              ),
+              style: Theme.of(context).textTheme.subtitle2,
             ),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             ElevatedButton(
@@ -52,7 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onPrimary: Colors.white,
               ),
               onPressed: logout,
-              child: Text("Logout"),
+              child: const Text("Logout"),
             ),
           ],
         ),

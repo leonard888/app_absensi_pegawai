@@ -12,7 +12,7 @@ import 'package:app_presensi_pegawai/pages/manager/attendance/attendance_input_p
 import 'package:app_presensi_pegawai/pages/manager/attendance/attendance_list_page.dart';
 
 import 'package:app_presensi_pegawai/pages/manager/employee/employee_input_page.dart';
-import 'package:app_presensi_pegawai/pages/manager/employee/employee_list_page.dart';
+import 'package:app_presensi_pegawai/pages/employee_list_page.dart';
 
 import 'package:app_presensi_pegawai/pages/manager/office/office_input_page.dart';
 import 'package:app_presensi_pegawai/pages/office_list_page.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeClass.darkTheme,
       theme: ThemeClass.lightTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
         '/': (context) => const MainPage(),
         '/login': (context) => const LoginPage(),

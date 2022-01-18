@@ -1,9 +1,11 @@
+import 'package:app_presensi_pegawai/pages/employee_list_page.dart';
 import 'package:app_presensi_pegawai/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 import 'package:app_presensi_pegawai/pages/office_list_page.dart';
 import 'package:app_presensi_pegawai/pages/profile_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -16,6 +18,13 @@ class _MainPageState extends State<MainPage> {
   final PageController _myPage = PageController(initialPage: 0);
   int currentPage = 0;
 
+  List<String> titles = [
+    "Home",
+    "Office",
+    "Employee",
+    "Profile",
+  ];
+
   _changePage(int index) {
     setState(() {
       _myPage.jumpToPage(index);
@@ -27,18 +36,29 @@ class _MainPageState extends State<MainPage> {
     return index == currentPage;
   }
 
+  _checkJwt() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jwt = prefs.getString("jwt");
+
+    if (jwt == null) {
+      Navigator.pushReplacementNamed(context, "/login");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _checkJwt();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
-        title: const Text(
-          "Shift",
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
+        title: Text(
+          titles.elementAt(currentPage),
         ),
         elevation: 0,
       ),
@@ -47,7 +67,7 @@ class _MainPageState extends State<MainPage> {
         children: const [
           HomePage(),
           OfficeListPage(),
-          Text("Hello"),
+          EmployeeListPage(),
           ProfilePage(),
         ],
         physics: const NeverScrollableScrollPhysics(),

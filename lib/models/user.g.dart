@@ -6,6 +6,18 @@ part of 'user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+ErrorData _$ErrorDataFromJson(Map<String, dynamic> json) => ErrorData(
+      status: json['status'] as int,
+      name: json['name'] as String,
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$ErrorDataToJson(ErrorData instance) => <String, dynamic>{
+      'status': instance.status,
+      'name': instance.name,
+      'message': instance.message,
+    };
+
 User _$UserFromJson(Map<String, dynamic> json) => User(
       username: json['username'] as String,
       email: json['email'] as String,
@@ -29,11 +41,17 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
     };
 
 UserAuth _$UserAuthFromJson(Map<String, dynamic> json) => UserAuth(
-      jwt: json['jwt'] as String,
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      jwt: json['jwt'] as String?,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+      error: json['error'] == null
+          ? null
+          : ErrorData.fromJson(json['error'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserAuthToJson(UserAuth instance) => <String, dynamic>{
       'jwt': instance.jwt,
-      'user': instance.user.toJson(),
+      'user': instance.user?.toJson(),
+      'error': instance.error?.toJson(),
     };
