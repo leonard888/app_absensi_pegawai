@@ -6,6 +6,18 @@ part of 'user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+Avatar _$AvatarFromJson(Map<String, dynamic> json) => Avatar(
+      url: json['url'] as String,
+      hash: json['hash'] as String,
+      ext: json['ext'] as String,
+    );
+
+Map<String, dynamic> _$AvatarToJson(Avatar instance) => <String, dynamic>{
+      'url': instance.url,
+      'hash': instance.hash,
+      'ext': instance.ext,
+    };
+
 UserAttributes _$UserAttributesFromJson(Map<String, dynamic> json) =>
     UserAttributes(
       username: json['username'] as String?,
@@ -19,6 +31,9 @@ UserAttributes _$UserAttributesFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updatedAt'] == null
           ? null
           : DateTime.parse(json['updatedAt'] as String),
+      avatar: json['avatar'] == null
+          ? null
+          : Avatar.fromJson(json['avatar'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserAttributesToJson(UserAttributes instance) =>
@@ -30,6 +45,7 @@ Map<String, dynamic> _$UserAttributesToJson(UserAttributes instance) =>
       'blocked': instance.blocked,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
+      'avatar': instance.avatar?.toJson(),
     };
 
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(

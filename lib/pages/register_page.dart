@@ -32,7 +32,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   TextFormField(
                     onSaved: (value) {
-                      username = value!;
+                      setState(() {
+                        username = value!;
+                      });
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -53,7 +55,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFormField(
                     onSaved: (value) {
-                      email = value!;
+                      setState(() {
+                        email = value!;
+                      });
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -74,7 +78,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   TextFormField(
                     onSaved: (value) {
-                      password = value!;
+                      setState(() {
+                        password = value!;
+                      });
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {

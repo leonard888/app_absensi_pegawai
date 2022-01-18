@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_const
 
+import 'package:app_presensi_pegawai/models/submodels/user.dart';
+import 'package:app_presensi_pegawai/services/api/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -12,6 +14,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  UserAttributes? user;
+
+  _getProfile() async {
+    UserAttributes profile = await UserService().profile();
+    // print(profile.avatar);
+    setState(() {
+      user = profile;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getProfile();
+  }
+
   Future<void> _showAttendanceDialog() async {
     return showDialog<void>(
       context: context,
@@ -92,9 +110,11 @@ class _HomePageState extends State<HomePage> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        "https://via.placeholder.com/48x48",
+                        user?.avatar?.getLink('thumbnail') ??
+                            'https://via.placeholder.com/168',
                         height: 48,
                         width: 48,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -102,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "John Doe",
+                          user?.username ?? '---',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -110,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          "johndoe@gmail.com",
+                          user?.email ?? '---',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black54,

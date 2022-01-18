@@ -1,5 +1,6 @@
 import 'package:app_presensi_pegawai/pages/employee_list_page.dart';
 import 'package:app_presensi_pegawai/pages/home_page.dart';
+import 'package:app_presensi_pegawai/services/api/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -37,9 +38,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   _checkJwt() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? jwt = prefs.getString("jwt");
-
+    var jwt = await AuthService().getJwt();
     if (jwt == null) {
       Navigator.pushReplacementNamed(context, "/login");
     }

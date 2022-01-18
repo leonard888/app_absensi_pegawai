@@ -3,10 +3,11 @@ import 'dart:convert';
 
 import 'package:app_presensi_pegawai/services/constants.dart';
 import 'package:app_presensi_pegawai/models/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   static Future<UserAuth> login(identifier, password) async {
-    Uri uri = Uri.parse('$BASE_URL/auth/local');
+    Uri uri = Uri.parse('$BASE_URL/api/auth/local');
 
     print(identifier);
     print(password);
@@ -28,7 +29,7 @@ class AuthService {
   }
 
   static Future<UserAuth> register(username, email, password) async {
-    Uri uri = Uri.parse('$BASE_URL/auth/local/register');
+    Uri uri = Uri.parse('$BASE_URL/api/auth/local/register');
 
     var response = await http.post(
       uri,
@@ -43,5 +44,17 @@ class AuthService {
     );
 
     return UserAuth.fromJson(json.decode(response.body));
+  }
+
+  Future<String?> getJwt() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? jwt = prefs.getString("jwt");
+
+    return jwt;
+  }
+
+  Future<void> deleteJwt() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove("jwt");
   }
 }
