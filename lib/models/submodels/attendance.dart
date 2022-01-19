@@ -8,6 +8,7 @@ part 'attendance.g.dart';
 @JsonSerializable(explicitToJson: true)
 class AttendanceAttributes {
   AttendanceAttributes({
+    this.id,
     this.createdAt,
     this.updatedAt,
     this.status,
@@ -16,6 +17,7 @@ class AttendanceAttributes {
     this.office,
   });
 
+  int? id;
   DateTime? createdAt;
   DateTime? updatedAt;
   String? status;

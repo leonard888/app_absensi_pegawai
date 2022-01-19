@@ -7,8 +7,27 @@ import 'package:app_presensi_pegawai/services/api/auth.dart';
 
 class UserService {
   create() {}
-  find() {}
-  findOne() {}
+  Future<List<UserAttributes>> find() async {
+    var jwt = await AuthService().getJwt();
+    Uri uri = Uri.parse('$BASE_URL/api/users');
+
+    var response = await http.get(uri, headers: {
+      'Authorization': 'Bearer $jwt',
+    });
+    return List<UserAttributes>.from(
+      json.decode(response.body).map((x) => UserAttributes.fromJson(x)),
+    );
+  }
+
+  Future<UserAttributes> findOne(String id) async {
+    var jwt = await AuthService().getJwt();
+    Uri uri = Uri.parse('$BASE_URL/api/users/$id');
+    var response = await http.get(uri, headers: {
+      'Authorization': 'Bearer $jwt',
+    });
+    return UserAttributes.fromJson(json.decode(response.body));
+  }
+
   update() {}
   destroy() {}
   Future<UserAttributes> profile() async {
@@ -18,8 +37,6 @@ class UserService {
     var response = await http.get(uri, headers: {
       'Authorization': 'Bearer $jwt',
     });
-
-    print(response.body);
 
     return UserAttributes.fromJson(json.decode(response.body));
   }

@@ -18,7 +18,6 @@ class _HomePageState extends State<HomePage> {
 
   _getProfile() async {
     UserAttributes profile = await UserService().profile();
-    // print(profile.avatar);
     setState(() {
       user = profile;
     });
@@ -131,7 +130,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           user?.email ?? '---',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black54,
                             fontSize: 14,

@@ -9,6 +9,7 @@ part of 'attendance.dart';
 AttendanceAttributes _$AttendanceAttributesFromJson(
         Map<String, dynamic> json) =>
     AttendanceAttributes(
+      id: json['id'] as int?,
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -30,6 +31,7 @@ AttendanceAttributes _$AttendanceAttributesFromJson(
 Map<String, dynamic> _$AttendanceAttributesToJson(
         AttendanceAttributes instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'status': instance.status,
