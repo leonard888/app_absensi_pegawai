@@ -1,9 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.aplikasi_presensi_pegawai">
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
    <application
-        android:label="aplikasi_presensi_pegawai"
+        android:label="Shift"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

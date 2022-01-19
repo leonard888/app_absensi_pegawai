@@ -30,7 +30,6 @@ class _ScanPageState extends State<ScanPage> {
   @override
   void initState() {
     super.initState();
-    LocationService().determinePosition();
   }
 
   @override
@@ -40,7 +39,7 @@ class _ScanPageState extends State<ScanPage> {
         centerTitle: true,
         title: const Text(
           "Scan QR",
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
@@ -63,7 +62,7 @@ class _ScanPageState extends State<ScanPage> {
               ),
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: Text(""),
           ),
@@ -74,13 +73,14 @@ class _ScanPageState extends State<ScanPage> {
 
   void _onQRViewCreated(QRViewController controller) async {
     this.controller = controller;
+    await LocationService().requestPermission();
 
     controller.scannedDataStream.listen((scanData) async {
       var pos = await LocationService().determinePosition();
 
       // TODO: API Request
 
-      Navigator.pushReplacementNamed(context, "/");
+      Navigator.pop(context);
     });
   }
 

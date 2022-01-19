@@ -1,11 +1,10 @@
 // ignore_for_file: unnecessary_const
 
-import 'package:app_presensi_pegawai/pages/office_list_page.dart';
-import 'package:app_presensi_pegawai/pages/profile_page.dart';
+import 'package:app_presensi_pegawai/models/submodels/user.dart';
+import 'package:app_presensi_pegawai/services/api/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,111 +14,82 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final PageController _myPage = PageController(initialPage: 0);
-  int currentPage = 0;
+  UserAttributes? user;
 
-  _changePage(int index) {
+  _getProfile() async {
+    UserAttributes profile = await UserService().profile();
+    // print(profile.avatar);
     setState(() {
-      _myPage.jumpToPage(index);
-      currentPage = index;
+      user = profile;
     });
   }
 
-  _isPageActive(int index) {
-    return index == currentPage;
+  @override
+  void initState() {
+    super.initState();
+    _getProfile();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: const Text(
-          "Shift",
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+  Future<void> _showAttendanceDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'SCBD Office',
+            style: Theme.of(context).textTheme.headline5,
           ),
-        ),
-        elevation: 0,
-      ),
-      body: PageView(
-        controller: _myPage,
-        children: const [
-          HPage(),
-          OfficeListPage(),
-          Text("Hello"),
-          ProfilePage(),
-        ],
-        physics: const NeverScrollableScrollPhysics(),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        color: Colors.black,
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            IconButton(
-                icon: Icon(
-                  FeatherIcons.home,
-                  color: _isPageActive(0) ? Colors.deepPurple : Colors.white,
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(
+                  'Check In',
+                  style: Theme.of(context).textTheme.subtitle1,
                 ),
-                onPressed: () {
-                  _changePage(0);
-                }),
-            IconButton(
-                icon: Icon(
-                  FeatherIcons.map,
-                  color: _isPageActive(1) ? Colors.deepPurple : Colors.white,
+                Text(
+                  '18 Januari 2022 @ 09.00',
+                  style: Theme.of(context).textTheme.caption,
                 ),
-                onPressed: () {
-                  _changePage(1);
-                }),
-            const SizedBox(
-              width: 24,
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'Check Out',
+                  style: Theme.of(context).textTheme.subtitle1,
+                ),
+                Text(
+                  '18 Januari 2022 @ 15.00',
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ],
             ),
-            IconButton(
-                icon: Icon(
-                  FeatherIcons.book,
-                  color: _isPageActive(2) ? Colors.deepPurple : Colors.white,
-                ),
-                onPressed: () {
-                  _changePage(2);
-                }),
-            IconButton(
-                icon: Icon(
-                  FeatherIcons.user,
-                  color: _isPageActive(3) ? Colors.deepPurple : Colors.white,
-                ),
-                onPressed: () {
-                  _changePage(3);
-                }),
+          ),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white70,
+              ),
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.red,
+              ),
+              child: const Text('Check Out'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
           ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.qr_code_scanner_outlined),
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
-        onPressed: () {
-          Navigator.pushNamed(context, "/scan");
-        },
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        );
+      },
     );
   }
-}
 
-class HPage extends StatefulWidget {
-  const HPage({Key? key}) : super(key: key);
-
-  @override
-  _HPageState createState() => _HPageState();
-}
-
-class _HPageState extends State<HPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -140,9 +110,11 @@ class _HPageState extends State<HPage> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        "https://via.placeholder.com/48x48",
+                        user?.avatar?.getLink('thumbnail') ??
+                            'https://via.placeholder.com/168',
                         height: 48,
                         width: 48,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -150,7 +122,7 @@ class _HPageState extends State<HPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "John Doe",
+                          user?.username ?? '---',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -158,7 +130,7 @@ class _HPageState extends State<HPage> {
                           ),
                         ),
                         Text(
-                          "johndoe@gmail.com",
+                          user?.email ?? '---',
                           style: TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black54,
@@ -181,12 +153,12 @@ class _HPageState extends State<HPage> {
               right: 24,
               bottom: 16,
             ),
-            child: Text(
+            child: const Text(
               "HISTORY",
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.normal,
                 color: Colors.white70,
-                fontSize: 16,
+                fontSize: 14,
               ),
             ),
           ),
@@ -198,49 +170,44 @@ class _HPageState extends State<HPage> {
             itemBuilder: (BuildContext ctx, int index) {
               return InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, "/attendance/detail");
+                  _showAttendanceDialog();
                 },
                 borderRadius: BorderRadius.circular(8),
                 splashColor: Colors.deepPurple.withAlpha(40),
                 child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Hello world",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 24),
-                            Text(
-                              "23/11/2021 - 10:10 AM",
-                              style: TextStyle(
-                                color: Colors.white70,
-                                fontSize: 13,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          "Check In",
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.normal,
-                            color: Colors.green,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "SCBD Office",
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
+                          const SizedBox(height: 24),
+                          Text(
+                            "23/11/2021 - 10:10 AM",
+                            style: Theme.of(context).textTheme.caption,
+                          ),
+                        ],
+                      ),
+                      Text(
+                        "Check In",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
-                      ],
-                    )),
+                      ),
+                    ],
+                  ),
+                ),
               );
             },
           ),

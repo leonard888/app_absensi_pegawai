@@ -3,7 +3,7 @@ import 'package:app_presensi_pegawai/pages/office_detail_page.dart';
 import 'package:app_presensi_pegawai/theme.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app_presensi_pegawai/pages/home_page.dart';
+import 'package:app_presensi_pegawai/pages/main_page.dart';
 import 'package:app_presensi_pegawai/pages/login_page.dart';
 import 'package:app_presensi_pegawai/pages/register_page.dart';
 import 'package:app_presensi_pegawai/pages/scan_page.dart';
@@ -12,7 +12,7 @@ import 'package:app_presensi_pegawai/pages/manager/attendance/attendance_input_p
 import 'package:app_presensi_pegawai/pages/manager/attendance/attendance_list_page.dart';
 
 import 'package:app_presensi_pegawai/pages/manager/employee/employee_input_page.dart';
-import 'package:app_presensi_pegawai/pages/manager/employee/employee_list_page.dart';
+import 'package:app_presensi_pegawai/pages/employee_list_page.dart';
 
 import 'package:app_presensi_pegawai/pages/manager/office/office_input_page.dart';
 import 'package:app_presensi_pegawai/pages/office_list_page.dart';
@@ -31,9 +31,9 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeClass.darkTheme,
       theme: ThemeClass.lightTheme,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => const MainPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => const RegisterPage(),
         '/scan': (context) => ScanPage(),

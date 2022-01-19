@@ -1,17 +1,8 @@
 import 'package:app_presensi_pegawai/services/api/auth.dart';
 import 'package:flutter/material.dart';
 
-outlinedInputDecoration(String label) => InputDecoration(
-      floatingLabelBehavior: FloatingLabelBehavior.always,
-      prefixIcon: const Icon(Icons.email_outlined),
-      border: const OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.red,
-          width: 2.0,
-        ),
-      ),
-      labelText: label,
-    );
+import 'package:app_presensi_pegawai/models/user.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -27,96 +18,120 @@ class _LoginPageState extends State<LoginPage> {
 
   String? identifier, password;
 
-  login() {
-    // if (_formKey.currentState!.validate()) {
-    // AuthService.login(identifier, password);
-    // }
-    Navigator.pushReplacementNamed(context, "/");
+  login() async {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      UserAuth user = await AuthService.login(identifier, password);
+
+      if (user.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Processing Data')),
+        );
+        return;
+      }
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      if (user.jwt != null) {
+        await prefs.setString('jwt', user.jwt ?? '');
+        Navigator.pushReplacementNamed(context, "/");
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(24),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextFormField(
-                onSaved: (value) {
-                  identifier = value!;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please fill in the Email field';
-                  }
-                },
-                decoration: const InputDecoration(
-                  fillColor: Colors.white10,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8),
+      appBar: AppBar(
+        title: const Text("Login"),
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    onSaved: (value) {
+                      setState(() {
+                        identifier = value!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please fill in the Email field';
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      fillColor: Colors.white10,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      ),
+                      helperText: "",
+                      hintText: "Enter email",
                     ),
                   ),
-                  helperText: "",
-                  hintText: "Enter email",
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              TextFormField(
-                onSaved: (value) {
-                  password = value!;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please fill in the Password field';
-                  }
-                },
-                obscureText: true,
-                decoration: const InputDecoration(
-                  fillColor: Colors.white10,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(8),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextFormField(
+                    onSaved: (value) {
+                      setState(() {
+                        password = value!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please fill in the Password field';
+                      }
+                    },
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      fillColor: Colors.white10,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      ),
+                      helperText: "",
+                      hintText: "Password",
                     ),
                   ),
-                  helperText: "",
-                  hintText: "Password",
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(
-                    double.infinity,
-                    48,
+                  const SizedBox(
+                    height: 24,
                   ),
-                ),
-                onPressed: login,
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                    fontSize: 16,
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(
+                        double.infinity,
+                        48,
+                      ),
+                    ),
+                    onPressed: login,
+                    child: const Text(
+                      'Log In',
+                    ),
                   ),
-                ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, "/register");
+                    },
+                    child: const Text("Register"),
+                  ),
+                ],
               ),
-              SizedBox(
-                height: 16,
-              ),
-              TextButton(
-                onPressed: () {},
-                child: Text("Register"),
-              ),
-            ],
+            ),
           ),
         ),
       ),
