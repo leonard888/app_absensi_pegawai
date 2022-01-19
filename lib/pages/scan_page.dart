@@ -89,7 +89,7 @@ class _ScanPageState extends State<ScanPage> {
 
       await AttendanceService().create(
         userId: int.parse(userId ?? '0'),
-        officeId: int.parse(result!.code ?? '0'),
+        officeId: int.parse(scanData.code.toString()),
         location: location,
       );
 

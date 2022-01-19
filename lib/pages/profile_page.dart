@@ -52,11 +52,11 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 16),
             Text(
-              user?.username ?? '---',
+              user?.username ?? '████',
               style: Theme.of(context).textTheme.headline5,
             ),
             Text(
-              user?.email ?? '--------',
+              user?.email ?? '██████████',
               style: Theme.of(context).textTheme.subtitle2,
             ),
             const SizedBox(

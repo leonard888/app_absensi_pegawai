@@ -40,15 +40,15 @@ class Attendance {
 class AttendanceOfficeAttributes {
   AttendanceOfficeAttributes({
     this.id,
-    this.createdAt,
-    this.updatedAt,
+    required this.createdAt,
+    required this.updatedAt,
     this.status,
     this.office,
   });
 
   int? id;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  DateTime createdAt;
+  DateTime updatedAt;
   String? status;
   OfficeAttributes? office;
 

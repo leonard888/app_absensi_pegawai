@@ -24,6 +24,7 @@ class EmployeeCard extends StatelessWidget {
                     'https://via.placeholder.com/48',
                 height: 48,
                 width: 48,
+                fit: BoxFit.cover,
               ),
             ),
           ),
