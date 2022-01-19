@@ -1,4 +1,4 @@
-import 'package:app_presensi_pegawai/models/submodels/attendance.dart';
+import 'package:app_presensi_pegawai/models/attendance.dart';
 import 'package:app_presensi_pegawai/models/submodels/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -7,6 +7,7 @@ part 'user.g.dart';
 @JsonSerializable(explicitToJson: true)
 class UserAttributes {
   UserAttributes({
+    this.id,
     this.username,
     this.email,
     this.provider,
@@ -18,11 +19,12 @@ class UserAttributes {
     this.attendances,
   });
 
+  int? id;
   String? username, email, provider;
   bool? confirmed, blocked;
   DateTime? createdAt, updatedAt;
   Media? avatar;
-  List<AttendanceAttributes>? attendances;
+  List<AttendanceOfficeAttributes>? attendances;
 
   factory UserAttributes.fromJson(Map<String, dynamic> data) =>
       _$UserAttributesFromJson(data);

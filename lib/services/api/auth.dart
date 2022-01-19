@@ -48,6 +48,13 @@ class AuthService {
     return jwt;
   }
 
+  Future<String?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString("userId");
+
+    return userId;
+  }
+
   Future<void> deleteJwt() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove("jwt");

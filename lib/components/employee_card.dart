@@ -1,8 +1,12 @@
+import 'package:app_presensi_pegawai/models/submodels/user.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeCard extends StatelessWidget {
   final void Function() onTap;
-  const EmployeeCard({Key? key, required this.onTap}) : super(key: key);
+  final UserAttributes employee;
+
+  const EmployeeCard({Key? key, required this.onTap, required this.employee})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,8 @@ class EmployeeCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: Image.network(
-                "https://via.placeholder.com/48x48",
+                employee.avatar?.getLink("thumbnail") ??
+                    'https://via.placeholder.com/48',
                 height: 48,
                 width: 48,
               ),
@@ -26,11 +31,11 @@ class EmployeeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "John Doe",
+                employee.username ?? '',
                 style: Theme.of(context).textTheme.subtitle1,
               ),
               Text(
-                "Jakarta",
+                'Manager - Jakarta',
                 style: Theme.of(context).textTheme.caption,
               ),
             ],
