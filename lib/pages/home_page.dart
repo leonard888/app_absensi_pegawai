@@ -21,9 +21,11 @@ class _HomePageState extends State<HomePage> {
 
   _getProfile() async {
     UserAttributes profile = await UserService().profile();
+    List<AttendanceOfficeAttributes> reversedAttendances =
+        List.from(profile.attendances!.reversed);
     setState(() {
       user = profile;
-      attendances = profile.attendances ?? [];
+      attendances = reversedAttendances;
     });
   }
 

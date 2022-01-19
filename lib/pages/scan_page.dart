@@ -1,4 +1,7 @@
 import 'dart:io' show Platform;
+import 'package:app_presensi_pegawai/models/submodels/geo.dart';
+import 'package:app_presensi_pegawai/services/api/attendance.dart';
+import 'package:app_presensi_pegawai/services/api/auth.dart';
 import 'package:app_presensi_pegawai/services/location.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -76,9 +79,19 @@ class _ScanPageState extends State<ScanPage> {
     await LocationService().requestPermission();
 
     controller.scannedDataStream.listen((scanData) async {
-      var pos = await LocationService().determinePosition();
+      Position pos = await LocationService().determinePosition();
+      String? userId = await AuthService().getUserId();
 
-      // TODO: API Request
+      Geo location = Geo(
+        lat: pos.latitude.toString(),
+        lng: pos.longitude.toString(),
+      );
+
+      await AttendanceService().create(
+        userId: int.parse(userId ?? '0'),
+        officeId: int.parse(result!.code ?? '0'),
+        location: location,
+      );
 
       Navigator.pop(context);
     });
