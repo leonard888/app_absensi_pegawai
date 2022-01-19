@@ -1,5 +1,7 @@
 import 'package:app_presensi_pegawai/models/attendance.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:intl/intl.dart';
 
 class AttendanceCard extends StatelessWidget {
   final void Function() onTap;
@@ -32,19 +34,25 @@ class AttendanceCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  attendance.createdAt!.toIso8601String(),
+                  DateFormat("dd/MM/yyyy @ kk:mm").format(attendance.createdAt),
                   style: Theme.of(context).textTheme.caption,
                 ),
               ],
             ),
-            Text(
-              attendance.status ?? '',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.normal,
-                color: Theme.of(context).colorScheme.secondary,
-              ),
+            Icon(
+              FeatherIcons.minus,
+              color: attendance.status == 'checkout'
+                  ? Colors.orange
+                  : Theme.of(context).colorScheme.secondary,
             ),
+            // Text(
+            //   attendance.status ?? '',
+            //   style: TextStyle(
+            //     fontSize: 14,
+            //     fontWeight: FontWeight.normal,
+            //     color: Theme.of(context).colorScheme.secondary,
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -3,10 +3,12 @@
 import 'package:app_presensi_pegawai/components/attendance_card.dart';
 import 'package:app_presensi_pegawai/models/attendance.dart';
 import 'package:app_presensi_pegawai/models/submodels/user.dart';
+import 'package:app_presensi_pegawai/services/api/attendance.dart';
 import 'package:app_presensi_pegawai/services/api/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -54,7 +56,7 @@ class _HomePageState extends State<HomePage> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  attendance.createdAt!.toIso8601String(),
+                  DateFormat("dd/MM/yyyy @ kk:mm").format(attendance.createdAt),
                   style: Theme.of(context).textTheme.caption,
                 ),
                 const SizedBox(
@@ -65,7 +67,10 @@ class _HomePageState extends State<HomePage> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  attendance.updatedAt!.toIso8601String(),
+                  attendance.status == 'checkout'
+                      ? DateFormat("dd/MM/yyyy @ kk:mm")
+                          .format(attendance.updatedAt)
+                      : '-',
                   style: Theme.of(context).textTheme.caption,
                 ),
               ],
@@ -81,16 +86,22 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context).pop();
               },
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.red,
+            if (attendance.status == 'checkin')
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.red,
+                ),
+                child: const Text('Check Out'),
+                onPressed: () async {
+                  await AttendanceService().update(
+                    attendance.id.toString(),
+                    {"status": "checkout"},
+                  );
+                  await _getProfile();
+
+                  Navigator.of(context).pop();
+                },
               ),
-              child: const Text('Check Out'),
-              onPressed: () {
-                // TODO: Update Attendance
-                Navigator.of(context).pop();
-              },
-            ),
           ],
         );
       },
@@ -129,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          user?.username ?? '---',
+                          user?.username ?? '███',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -137,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Text(
-                          user?.email ?? '---',
+                          user?.email ?? '████████',
                           style: const TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black54,

@@ -21,6 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   login() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      FocusManager.instance.primaryFocus?.unfocus();
       UserAuth user = await AuthService.login(identifier, password);
 
       if (user.error != null) {
@@ -29,6 +30,11 @@ class _LoginPageState extends State<LoginPage> {
         );
         return;
       }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Loading...')),
+      );
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       if (user.jwt != null) {
