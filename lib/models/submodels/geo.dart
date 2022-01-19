@@ -5,12 +5,12 @@ part 'geo.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Geo {
   Geo({
-    required this.id,
+    this.id,
     required this.lat,
     required this.lng,
   });
 
-  int id;
+  int? id;
   String lat;
   String lng;
 

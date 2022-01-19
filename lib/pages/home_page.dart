@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_const
 
+import 'package:app_presensi_pegawai/components/attendance_card.dart';
+import 'package:app_presensi_pegawai/models/attendance.dart';
 import 'package:app_presensi_pegawai/models/submodels/user.dart';
 import 'package:app_presensi_pegawai/services/api/user.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,12 +17,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   UserAttributes? user;
+  List<AttendanceOfficeAttributes> attendances = [];
 
   _getProfile() async {
     UserAttributes profile = await UserService().profile();
-    // print(profile.avatar);
+    List<AttendanceOfficeAttributes> reversedAttendances =
+        List.from(profile.attendances!.reversed);
     setState(() {
       user = profile;
+      attendances = reversedAttendances;
     });
   }
 
@@ -30,14 +35,15 @@ class _HomePageState extends State<HomePage> {
     _getProfile();
   }
 
-  Future<void> _showAttendanceDialog() async {
+  Future<void> _showAttendanceDialog(
+      AttendanceOfficeAttributes attendance) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'SCBD Office',
+            attendance.office!.name,
             style: Theme.of(context).textTheme.headline5,
           ),
           content: SingleChildScrollView(
@@ -48,10 +54,10 @@ class _HomePageState extends State<HomePage> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  '18 Januari 2022 @ 09.00',
+                  attendance.createdAt!.toIso8601String(),
                   style: Theme.of(context).textTheme.caption,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Text(
@@ -59,7 +65,7 @@ class _HomePageState extends State<HomePage> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  '18 Januari 2022 @ 15.00',
+                  attendance.updatedAt!.toIso8601String(),
                   style: Theme.of(context).textTheme.caption,
                 ),
               ],
@@ -81,6 +87,7 @@ class _HomePageState extends State<HomePage> {
               ),
               child: const Text('Check Out'),
               onPressed: () {
+                // TODO: Update Attendance
                 Navigator.of(context).pop();
               },
             ),
@@ -131,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                         Text(
                           user?.email ?? '---',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.normal,
                             color: Colors.black54,
                             fontSize: 14,
@@ -166,48 +173,13 @@ class _HomePageState extends State<HomePage> {
             physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.symmetric(horizontal: 8),
             shrinkWrap: true,
-            itemCount: 4,
+            itemCount: attendances.length,
             itemBuilder: (BuildContext ctx, int index) {
-              return InkWell(
+              return AttendanceCard(
                 onTap: () {
-                  _showAttendanceDialog();
+                  _showAttendanceDialog(attendances.elementAt(index));
                 },
-                borderRadius: BorderRadius.circular(8),
-                splashColor: Colors.deepPurple.withAlpha(40),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 16,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "SCBD Office",
-                            style: Theme.of(context).textTheme.subtitle1,
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            "23/11/2021 - 10:10 AM",
-                            style: Theme.of(context).textTheme.caption,
-                          ),
-                        ],
-                      ),
-                      Text(
-                        "Check In",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                attendance: attendances.elementAt(index),
               );
             },
           ),

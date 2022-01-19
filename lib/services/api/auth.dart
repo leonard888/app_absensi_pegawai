@@ -9,9 +9,6 @@ class AuthService {
   static Future<UserAuth> login(identifier, password) async {
     Uri uri = Uri.parse('$BASE_URL/api/auth/local');
 
-    print(identifier);
-    print(password);
-
     var response = await http.post(
       uri,
       headers: {
@@ -22,8 +19,6 @@ class AuthService {
         "password": password,
       }),
     );
-
-    print(response.body);
 
     return UserAuth.fromJson(json.decode(response.body));
   }
@@ -51,6 +46,13 @@ class AuthService {
     String? jwt = prefs.getString("jwt");
 
     return jwt;
+  }
+
+  Future<String?> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString("userId");
+
+    return userId;
   }
 
   Future<void> deleteJwt() async {

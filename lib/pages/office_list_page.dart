@@ -1,4 +1,7 @@
 import 'package:app_presensi_pegawai/components/office_card.dart';
+import 'package:app_presensi_pegawai/models/office.dart';
+import 'package:app_presensi_pegawai/models/submodels/office.dart';
+import 'package:app_presensi_pegawai/services/api/office.dart';
 import 'package:flutter/material.dart';
 
 class OfficeListPage extends StatefulWidget {
@@ -9,10 +12,26 @@ class OfficeListPage extends StatefulWidget {
 }
 
 class _OfficeListPageState extends State<OfficeListPage> {
+  List<OfficeData> offices = [];
+
+  _getOffices() async {
+    OfficeFindMany response = await OfficeService().find();
+    print(response.data!.elementAt(0).attributes.cover!.data.id);
+    setState(() {
+      offices = response.data ?? [];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getOffices();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: 10,
+      itemCount: offices.length,
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -22,6 +41,7 @@ class _OfficeListPageState extends State<OfficeListPage> {
       ),
       itemBuilder: (BuildContext context, int index) {
         return OfficeCard(
+          office: offices.elementAt(index),
           onTap: () {
             Navigator.pushNamed(context, "/office/detail");
           },

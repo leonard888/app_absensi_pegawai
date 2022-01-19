@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
 
       if (user.error != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Processing Data')),
+          const SnackBar(content: Text('Invalid login')),
         );
         return;
       }
@@ -33,6 +33,8 @@ class _LoginPageState extends State<LoginPage> {
 
       if (user.jwt != null) {
         await prefs.setString('jwt', user.jwt ?? '');
+        await prefs.setString('userId', user.user!.id.toString());
+
         Navigator.pushReplacementNamed(context, "/");
       }
     }

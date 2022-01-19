@@ -1,8 +1,11 @@
+import 'package:app_presensi_pegawai/models/submodels/office.dart';
 import 'package:flutter/material.dart';
 
 class OfficeCard extends StatelessWidget {
   final void Function() onTap;
-  const OfficeCard({Key? key, required this.onTap}) : super(key: key);
+  final OfficeData office;
+  const OfficeCard({Key? key, required this.onTap, required this.office})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +21,12 @@ class OfficeCard extends StatelessWidget {
         child: Stack(
           children: [
             Ink.image(
-              image: NetworkImage("https://via.placeholder.com/168"),
-              fit: BoxFit.contain,
+              image: NetworkImage(
+                office.attributes.cover?.data.attributes!
+                        .getLink("thumbnail") ??
+                    "https://via.placeholder.com/168",
+              ),
+              fit: BoxFit.cover,
             ),
             Positioned(
               bottom: 0,
@@ -29,21 +36,18 @@ class OfficeCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "SCBD",
+                      office.attributes.name,
                       textAlign: TextAlign.left,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 6),
+                    // const SizedBox(height: 6),
                     Text(
-                      "Jakarta Selatan",
+                      office.attributes.address!.city ?? '',
                       textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.black45,
-                      ),
+                      style: Theme.of(context).textTheme.subtitle2,
                     ),
                   ],
                 ),

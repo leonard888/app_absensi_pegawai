@@ -6,20 +6,9 @@ part of 'user.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Avatar _$AvatarFromJson(Map<String, dynamic> json) => Avatar(
-      url: json['url'] as String,
-      hash: json['hash'] as String,
-      ext: json['ext'] as String,
-    );
-
-Map<String, dynamic> _$AvatarToJson(Avatar instance) => <String, dynamic>{
-      'url': instance.url,
-      'hash': instance.hash,
-      'ext': instance.ext,
-    };
-
 UserAttributes _$UserAttributesFromJson(Map<String, dynamic> json) =>
     UserAttributes(
+      id: json['id'] as int?,
       username: json['username'] as String?,
       email: json['email'] as String?,
       provider: json['provider'] as String?,
@@ -33,11 +22,16 @@ UserAttributes _$UserAttributesFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updatedAt'] as String),
       avatar: json['avatar'] == null
           ? null
-          : Avatar.fromJson(json['avatar'] as Map<String, dynamic>),
+          : Media.fromJson(json['avatar'] as Map<String, dynamic>),
+      attendances: (json['attendances'] as List<dynamic>?)
+          ?.map((e) =>
+              AttendanceOfficeAttributes.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$UserAttributesToJson(UserAttributes instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'username': instance.username,
       'email': instance.email,
       'provider': instance.provider,
@@ -46,6 +40,7 @@ Map<String, dynamic> _$UserAttributesToJson(UserAttributes instance) =>
       'createdAt': instance.createdAt?.toIso8601String(),
       'updatedAt': instance.updatedAt?.toIso8601String(),
       'avatar': instance.avatar?.toJson(),
+      'attendances': instance.attendances?.map((e) => e.toJson()).toList(),
     };
 
 UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData(
