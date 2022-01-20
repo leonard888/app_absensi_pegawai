@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
-class AttendanceDetailPage extends StatefulWidget {
-  const AttendanceDetailPage({Key? key}) : super(key: key);
+class EmployeeDetailPage extends StatefulWidget {
+  const EmployeeDetailPage({Key? key}) : super(key: key);
 
   @override
-  _AttendanceDetailPageState createState() => _AttendanceDetailPageState();
+  _EmployeeDetailPageState createState() => _EmployeeDetailPageState();
 }
 
-class _AttendanceDetailPageState extends State<AttendanceDetailPage> {
+class _EmployeeDetailPageState extends State<EmployeeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +22,14 @@ class _AttendanceDetailPageState extends State<AttendanceDetailPage> {
             flexibleSpace: FlexibleSpaceBar(
               background: FlutterLogo(),
             ),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  FeatherIcons.edit,
+                ),
+              ),
+            ],
           ),
           SliverList(
             delegate: SliverChildListDelegate(
@@ -31,7 +39,7 @@ class _AttendanceDetailPageState extends State<AttendanceDetailPage> {
                   height: 1000,
                   decoration: BoxDecoration(
                     color: Colors.grey[900],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16),
                     ),
@@ -40,7 +48,7 @@ class _AttendanceDetailPageState extends State<AttendanceDetailPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "SCBD Office",
+                        "Employee 1",
                         style: Theme.of(context).textTheme.headline5,
                       ),
                       Row(
@@ -79,20 +87,20 @@ class _AttendanceDetailPageState extends State<AttendanceDetailPage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.grey[900],
-        child: Container(
-          padding: EdgeInsets.all(12),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              padding: EdgeInsets.symmetric(vertical: 12),
-            ),
-            onPressed: () {},
-            child: Text("Check Out"),
-          ),
-        ),
-      ),
+      // bottomNavigationBar: BottomAppBar(
+      //   color: Colors.grey[900],
+      //   child: Container(
+      //     padding: EdgeInsets.all(12),
+      //     child: ElevatedButton(
+      //       style: ElevatedButton.styleFrom(
+      //         elevation: 0,
+      //         padding: EdgeInsets.symmetric(vertical: 12),
+      //       ),
+      //       onPressed: () {},
+      //       child: Text("Check Out"),
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

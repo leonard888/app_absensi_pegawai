@@ -79,6 +79,10 @@ class _ScanPageState extends State<ScanPage> {
     await LocationService().requestPermission();
 
     controller.scannedDataStream.listen((scanData) async {
+      if (result != null) {
+        return;
+      }
+
       Position pos = await LocationService().determinePosition();
       String? userId = await AuthService().getUserId();
 
@@ -93,7 +97,13 @@ class _ScanPageState extends State<ScanPage> {
         location: location,
       );
 
-      Navigator.pop(context);
+      await controller.pauseCamera();
+
+      setState(() {
+        result = scanData;
+      });
+      // Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/');
     });
   }
 

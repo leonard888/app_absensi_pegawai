@@ -14,7 +14,7 @@ class _OfficeDetailPageState extends State<OfficeDetailPage> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
+          SliverAppBar(
             pinned: true,
             snap: false,
             floating: false,
@@ -22,6 +22,14 @@ class _OfficeDetailPageState extends State<OfficeDetailPage> {
             flexibleSpace: FlexibleSpaceBar(
               background: FlutterLogo(),
             ),
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  FeatherIcons.edit,
+                ),
+              ),
+            ],
           ),
           SliverList(
             delegate: SliverChildListDelegate(
