@@ -11,7 +11,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   String? email, username, password;
 
-  register() {}
+  register() async {
+    // TODO LEON: Panggil API (AuthService) -> register new user
+    // Pindah ke halaman login
+  }
 
   @override
   Widget build(BuildContext context) {

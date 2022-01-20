@@ -1,4 +1,3 @@
-import 'package:app_presensi_pegawai/pages/attendance_detail_page.dart';
 import 'package:app_presensi_pegawai/pages/employee_detail_page.dart';
 import 'package:app_presensi_pegawai/pages/office_detail_page.dart';
 import 'package:app_presensi_pegawai/theme.dart';
@@ -39,9 +38,7 @@ class MyApp extends StatelessWidget {
         '/register': (context) => const RegisterPage(),
         '/scan': (context) => ScanPage(),
         '/office/detail': (context) => const OfficeDetailPage(),
-        '/attendance/detail': (context) => const AttendanceDetailPage(),
         '/employee/detail': (context) => const EmployeeDetailPage(),
-        '/manager/attendance/input': (context) => const AttendanceInputPage(),
         '/manager/attendance/list': (context) => const AttendanceListPage(),
         '/manager/employee/input': (context) => const EmployeeInputPage(),
         '/manager/employee/list': (context) => const EmployeeListPage(),

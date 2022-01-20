@@ -1,3 +1,4 @@
+import 'package:app_presensi_pegawai/models/submodels/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -9,10 +10,26 @@ class EmployeeDetailPage extends StatefulWidget {
 }
 
 class _EmployeeDetailPageState extends State<EmployeeDetailPage> {
+  UserAttributes? user;
+
+  _getEmployee() async {
+    // TODO LEON:
+    // - Ambil userId yang dikirim dari halaman employee_list
+    // - Panggil API (UserService) -> get user by id
+    // - Set state user
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getEmployee();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        // TODO LEON: Buat tampilan detail karyawan
         slivers: [
           SliverAppBar(
             pinned: true,

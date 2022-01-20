@@ -1,3 +1,4 @@
+import 'package:app_presensi_pegawai/models/office.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
@@ -9,6 +10,20 @@ class OfficeDetailPage extends StatefulWidget {
 }
 
 class _OfficeDetailPageState extends State<OfficeDetailPage> {
+  OfficeFindOne? office;
+
+  _getOffice() async {
+    // TODO WULUNG:
+    // - Ambil officeId yang dikirim dari halaman office_list
+    // - Panggil API (OfficeService) -> find one office by id
+    // - set office state
+  }
+  @override
+  void initState() {
+    super.initState();
+    _getOffice();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

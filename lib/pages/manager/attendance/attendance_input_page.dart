@@ -10,6 +10,19 @@ class AttendanceInputPage extends StatefulWidget {
 class _AttendanceInputPageState extends State<AttendanceInputPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Create New Attendance"),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: [
+              //
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

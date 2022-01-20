@@ -16,7 +16,7 @@ class _OfficeListPageState extends State<OfficeListPage> {
 
   _getOffices() async {
     OfficeFindMany response = await OfficeService().find();
-    print(response.data!.elementAt(0).attributes.cover!.data.id);
+    // print(response.data!.elementAt(0).attributes.cover!.data.id);
     setState(() {
       offices = response.data ?? [];
     });
@@ -43,6 +43,7 @@ class _OfficeListPageState extends State<OfficeListPage> {
         return OfficeCard(
           office: offices.elementAt(index),
           onTap: () {
+            // TODO WULUNG: Kirim parameter officeId ke halaman detail
             Navigator.pushNamed(context, "/office/detail");
           },
         );

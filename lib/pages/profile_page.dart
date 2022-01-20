@@ -62,13 +62,29 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 32,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-                onPrimary: Colors.white,
-              ),
-              onPressed: logout,
-              child: const Text("Logout"),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/manager/attendance/list');
+                  },
+                  child: const Text("Dashboard"),
+                  style: TextButton.styleFrom(
+                    minimumSize: Size(88, 48),
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                    onPrimary: Colors.white,
+                  ),
+                  onPressed: logout,
+                  child: const Text("Logout"),
+                ),
+              ],
             ),
           ],
         ),

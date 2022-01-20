@@ -44,6 +44,7 @@ class _EmployeeListPageState extends State<EmployeeListPage> {
                 return EmployeeCard(
                   employee: users.elementAt(index),
                   onTap: () {
+                    // TODO LEON: Kirim parameter userId ke halaman detail
                     Navigator.pushNamed(context, "/employee/detail");
                   },
                 );

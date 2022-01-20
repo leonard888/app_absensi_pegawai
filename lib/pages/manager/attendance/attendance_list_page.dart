@@ -10,6 +10,21 @@ class AttendanceListPage extends StatefulWidget {
 class _AttendanceListPageState extends State<AttendanceListPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Dashboard'),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Text("Hello World")
+              // TODO LEON: Buat tampilan list kehadiran dari semua employee
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
