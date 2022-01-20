@@ -60,6 +60,21 @@ class _MainPageState extends State<MainPage> {
           titles.elementAt(currentPage),
         ),
         elevation: 0,
+        actions: [
+          if (currentPage == 1 || currentPage == 2)
+            IconButton(
+              onPressed: () {
+                if (currentPage == 1) {
+                  Navigator.pushNamed(context, "/manager/office/input");
+                }
+
+                if (currentPage == 2) {
+                  Navigator.pushNamed(context, "/manager/employee/input");
+                }
+              },
+              icon: const Icon(FeatherIcons.plus),
+            )
+        ],
       ),
       body: PageView(
         controller: _myPage,

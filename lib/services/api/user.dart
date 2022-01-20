@@ -6,7 +6,9 @@ import 'package:app_presensi_pegawai/models/submodels/user.dart';
 import 'package:app_presensi_pegawai/services/api/auth.dart';
 
 class UserService {
-  create() {}
+  // Future<U> create() {
+
+  // }
   Future<List<UserAttributes>> find(String? filter) async {
     var jwt = await AuthService().getJwt();
     Uri uri = Uri.parse('$BASE_URL/api/users?filters[id][\$ne]=$filter');
