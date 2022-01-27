@@ -17,9 +17,11 @@ class _OfficeListPageState extends State<OfficeListPage> {
   _getOffices() async {
     OfficeFindMany response = await OfficeService().find();
     // print(response.data!.elementAt(0).attributes.cover!.data.id);
-    setState(() {
-      offices = response.data ?? [];
-    });
+    if (mounted) {
+      setState(() {
+        offices = response.data ?? [];
+      });
+    }
   }
 
   @override

@@ -14,16 +14,22 @@ class _RegisterPageState extends State<RegisterPage> {
   String? email, username, password;
 
   register() async {
-    UserAuth response = await AuthService.register(username, email, password);
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
 
-    if (response.error != null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Invalid register')),
-      );
-      return;
+      FocusManager.instance.primaryFocus?.unfocus();
+
+      UserAuth response = await AuthService.register(username, email, password);
+
+      if (response.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid register')),
+        );
+        return;
+      }
+
+      Navigator.of(context).pushReplacementNamed("/login");
     }
-
-    Navigator.of(context).pushReplacementNamed("/login");
   }
 
   @override

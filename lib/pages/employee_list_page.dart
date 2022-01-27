@@ -19,9 +19,11 @@ class _EmployeeListPageState extends State<EmployeeListPage> {
 
     List<UserAttributes> response = await UserService().find(userId);
 
-    setState(() {
-      users = response;
-    });
+    if (mounted) {
+      setState(() {
+        users = response;
+      });
+    }
   }
 
   @override

@@ -21,9 +21,11 @@ class _ProfilePageState extends State<ProfilePage> {
   _getProfile() async {
     UserAttributes profile = await UserService().profile();
     // print(profile.avatar);
-    setState(() {
-      user = profile;
-    });
+    if (mounted) {
+      setState(() {
+        user = profile;
+      });
+    }
   }
 
   @override
@@ -73,7 +75,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     minimumSize: Size(88, 48),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 16,
                 ),
                 ElevatedButton(

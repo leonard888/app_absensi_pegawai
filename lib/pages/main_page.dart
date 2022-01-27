@@ -18,6 +18,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final PageController _myPage = PageController(initialPage: 0);
   int currentPage = 0;
+  bool isLoggedIn = false;
 
   List<String> titles = [
     "Home",
@@ -38,9 +39,16 @@ class _MainPageState extends State<MainPage> {
   }
 
   _checkJwt() async {
-    var jwt = await AuthService().getJwt();
+    String? jwt = await AuthService().getJwt();
     if (jwt == null) {
-      Navigator.pushReplacementNamed(context, "/login");
+      // throw Exception('UNATHORIZED');
+      Navigator.of(context).pushReplacementNamed('/login');
+      return;
+    }
+    if (mounted) {
+      setState(() {
+        isLoggedIn = true;
+      });
     }
   }
 
@@ -52,6 +60,9 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isLoggedIn) {
+      return Container();
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
