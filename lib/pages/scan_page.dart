@@ -15,7 +15,7 @@ class ScanPage extends StatefulWidget {
 class _ScanPageState extends State<ScanPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  Barcode? result;
+  bool isResult = false;
   Position? position;
 
   QRViewController? controller;
@@ -79,12 +79,17 @@ class _ScanPageState extends State<ScanPage> {
     await LocationService().requestPermission();
 
     controller.scannedDataStream.listen((scanData) async {
-      if (result != null) {
+      if (isResult) {
+        Navigator.pushReplacementNamed(context, '/');
         return;
       }
 
       Position pos = await LocationService().determinePosition();
       String? userId = await AuthService().getUserId();
+
+      setState(() {
+        isResult = true;
+      });
 
       Geo location = Geo(
         lat: pos.latitude.toString(),
@@ -99,9 +104,6 @@ class _ScanPageState extends State<ScanPage> {
 
       await controller.pauseCamera();
 
-      setState(() {
-        result = scanData;
-      });
       // Navigator.pop(context);
       Navigator.pushReplacementNamed(context, '/');
     });
