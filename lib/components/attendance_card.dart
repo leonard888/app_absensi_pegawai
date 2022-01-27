@@ -10,6 +10,20 @@ class AttendanceCard extends StatelessWidget {
       {Key? key, required this.onTap, required this.attendance})
       : super(key: key);
 
+  _buildStatusIcon(BuildContext context) {
+    if (attendance.status == 'checkout') {
+      return const Icon(
+        FeatherIcons.cornerDownRight,
+        color: Colors.red,
+      );
+    } else {
+      return Icon(
+        FeatherIcons.cornerDownLeft,
+        color: Theme.of(context).colorScheme.secondary,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -34,17 +48,15 @@ class AttendanceCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  DateFormat("dd/MM/yyyy @ kk:mm").format(attendance.createdAt),
+                  DateFormat("EEE, dd MMM yyyy @ kk:mm").format(
+                    attendance.updatedAt.toLocal(),
+                  ),
                   style: Theme.of(context).textTheme.caption,
                 ),
               ],
             ),
-            Icon(
-              FeatherIcons.minus,
-              color: attendance.status == 'checkout'
-                  ? Colors.orange
-                  : Theme.of(context).colorScheme.secondary,
-            ),
+            _buildStatusIcon(context)
+
             // Text(
             //   attendance.status ?? '',
             //   style: TextStyle(

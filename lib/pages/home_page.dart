@@ -56,7 +56,9 @@ class _HomePageState extends State<HomePage> {
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
                 Text(
-                  DateFormat("dd/MM/yyyy @ kk:mm").format(attendance.createdAt),
+                  DateFormat("EEE, dd MMM yyyy @ kk:mm").format(
+                    attendance.createdAt.toLocal(),
+                  ),
                   style: Theme.of(context).textTheme.caption,
                 ),
                 const SizedBox(
@@ -68,8 +70,9 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Text(
                   attendance.status == 'checkout'
-                      ? DateFormat("dd/MM/yyyy @ kk:mm")
-                          .format(attendance.updatedAt)
+                      ? DateFormat("EEE, dd MMM yyyy @ kk:mm").format(
+                          attendance.updatedAt.toLocal(),
+                        )
                       : '-',
                   style: Theme.of(context).textTheme.caption,
                 ),
