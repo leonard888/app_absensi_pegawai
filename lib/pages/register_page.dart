@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:app_presensi_pegawai/services/api/auth.dart';
+import 'package:app_presensi_pegawai/models/user.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -12,8 +14,16 @@ class _RegisterPageState extends State<RegisterPage> {
   String? email, username, password;
 
   register() async {
-    // TODO LEON: Panggil API (AuthService) -> register new user
-    // Pindah ke halaman login
+    UserAuth response = await AuthService.register(username, email, password);
+
+    if (response.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid register')),
+      );
+      return;
+    }
+
+    Navigator.of(context).pushReplacementNamed("/login");
   }
 
   @override

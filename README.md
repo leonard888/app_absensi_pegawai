@@ -1,16 +1,8 @@
-# aplikasi_presensi_pegawai
+# Shift - Aplikasi Presensi Pegawai
 
-A new Flutter project.
+## [API Documentation](https://www.postman.com/ghf-dev/workspace/public/collection/2708961-ff1c0681-7a65-418a-9629-189d19f3a95c)
 
-## Getting Started
+## [Dashboard](https://attendance.nalayan.id/admin)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Username: pab@gmail.com
+- Password: Pab-2022

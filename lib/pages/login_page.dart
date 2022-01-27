@@ -31,10 +31,6 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Loading...')),
-      );
-
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       if (user.jwt != null) {
